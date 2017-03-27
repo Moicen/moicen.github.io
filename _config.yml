@@ -19,13 +19,13 @@ description: > # this means to ignore newlines until "baseurl:"
   Time And Relative Dimension(s) In Space.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
-
+repository: moicen/moicen.github.io
 # Build settings
 markdown: kramdown
 theme: jekyll-theme-modernist
-show_downloads: false
 gems:
   - jekyll-feed
+  - jekyll-github-metadata
 exclude:
   - Gemfile
   - Gemfile.lock
