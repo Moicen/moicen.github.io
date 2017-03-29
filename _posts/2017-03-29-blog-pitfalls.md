@@ -1,14 +1,20 @@
 ---
-layout: default
+layout: post
 title: 使用jekyll在GitHub Pages上搭建博客时的一些问题
+abstract: 使用GitHub Pages做博客十分方便，因此也很受欢迎，但新手使用时总会遇到各种问题，本文总结了我自己在使用jekyll在GitHub Pages上搭建博客时遇到的一些问题，留作参考。 
 category: technical
 permalink: blog-pitfalls
+author: 木逸辰
+tags: [tech, blog, jekyll]
 ---
-使用`GitHub`搭建博客系统有很明显的优势：过程简单教程丰富；配置简单；文章更新也简单快捷，支持`markdown`语法；最后最重要的，不需要自己购买服务器或者主机，甚至连域名也可以不要，会自动分配一个`username.github.io`的域名。当然也可以绑定自己的个性域名，比如我主要就是为了让自己的域名有个地方放。。。
+
+### {{ page.title }}
+
+使用`GitHub`搭建博客系统有很明显的优势：过程简单教程丰富；配置简单；文章更新也简单快捷，支持`markdown`语法；最后最重要的，不需要自己购买服务器或者主机，甚至连域名也可以不要，会自动分配一个`username.github.io`的域名。当然也可以绑定自己的个性域名，比如我主要就是为了让自己的域名有个地方放。
 
 虽然`GitHub`以及`Jekyll`都有很详细的教程，一步一步指引新手如何搭建博客，但我一路弄下来，还是踩了不少坑。这里主要记录下这些坑，毕竟教程官网上已经十分详细了，照着一步步来即可。
 
-一开始到时很顺利，就是在`GitHub`上新建一个`username.github.io`的`repository`，然后添加了自定义域名，基本上此时就可以访问站点上的文件了。
+一开始很顺利，就是在`GitHub`上新建一个`username.github.io`的`repository`，然后添加了自定义域名，基本上此时就可以访问站点上的文件了。
 
 然后开始使用`Jekyll`初始化站点。之前没碰过`ruby`，于是直接按教程所写安装了`Jekyll`、`bundler`等`gem`，结果就遇到了几个坑。
 
@@ -17,12 +23,15 @@ permalink: blog-pitfalls
     There was an error while trying to write to
     `/Users/moicen/.bundle/cache/compact_index/rubygems.org.443.29b0360b937aa4d161703e6160654e47/versions`.
     It is likely that you need to grant write permissions for that path.
+
 于是很自然地，使用`sudo`运行，但是又出现一个`warning`:
 
     Rubygems 2.0.14.1 is not threadsafe, so your gems will be installed one at a time. Upgrade to Rubygems 2.1.0 or higher to enable parallel gem installation.
+
 以及一个`error`:
 
     Gem::Installer::ExtensionBuildError: ERROR: Failed to build gem native extension.
+
 警告很明白，就是说`Rubygems`版本低了，建议更新版本，暂时不管。这个错误就不是很明白问题在哪，不过还好接下来还有一段很长的信息，其中重点如下:
 
     Building nokogiri using packaged libraries.
