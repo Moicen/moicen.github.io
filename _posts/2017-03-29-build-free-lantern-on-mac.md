@@ -29,8 +29,31 @@ tags: [tech, lantern, mac]
 
     npm i gulp-cli -g
 
-`GNU Make`在`Mac OSX`中是自带的，然后进入lantern目录，这里注意，可以直接使用`make`命令:
+`GNU Make`在`Mac OSX`中是自带的，然后进入lantern目录。先要设置版本号，以防止自动读取已发布的新版本:
+
+    export VERSION=9.9.9
+
+然后就可以编译了，这里注意，可以直接使用`make`命令:
+
     make darwin //make lantern for mac
+
+结果报错:
+
+    Build tags:
+    Extra ldflags:
+    # github.com/getlantern/flashlight/proxied
+    src/github.com/getlantern/flashlight/proxied/proxied.go:391: tr.MaxIdleTime undefined (type *http.Transport has no field or method MaxIdleTime)
+    src/github.com/getlantern/flashlight/proxied/proxied.go:392: tr.EnforceMaxIdleTime undefined (type *http.Transport has no field or method EnforceMaxIdleTime)
+    # github.com/getlantern/flashlight/client
+    src/github.com/getlantern/flashlight/client/reverseproxy.go:20: unknown field 'MaxIdleTime' in struct literal of type http.Transport
+    src/github.com/getlantern/flashlight/client/reverseproxy.go:22: transport.EnforceMaxIdleTime undefined (type *http.Transport has no field or method EnforceMaxIdleTime)
+    make: *** [darwin] Error 2
+
+按照提示找到对应的文件对应位置
+`src/github.com/getlantern/flashlight/proxied/proxied.go:391`
+`src/github.com/getlantern/flashlight/client/reverseproxy.go:20`
+
+把`MaxIdleTime`换成`IdleConnTimeout`，然后把下面一句调用`EnforceMaxIdleTime()`这个方法的语句注释掉。重新编译。成功。
 
 但这条命令会只会生成一个叫`lantern_darwin_amd64`的可执行文件，这样:
 
@@ -50,10 +73,16 @@ tags: [tech, lantern, mac]
     make clean-desktop package-darwin
 
 完成！获得`lantern.app`文件，
+
 ![lantern_app](/assets/images/lantern_app.png)
+
 跟官网上提供的下载版本一样，只是不再有流量限制了。
 
-![lantern](/assets/images/lantern.png)
+[![lantern](/assets/images/lantern.png)]({{site.url}}/assets/images/lantern.png)
+
+来处理累积了很久的Gmail邮件
+
+![gmail](/assets/images/gmail.png)
 
 另外这个命令执行到最后报了个错:
 

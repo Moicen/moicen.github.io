@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 使用jekyll在GitHub Pages上搭建博客时的一些问题
-abstract: 使用GitHub Pages做博客十分方便，因此也很受欢迎，但新手使用时总会遇到各种问题，本文总结了我自己在使用jekyll在GitHub Pages上搭建博客时遇到的一些问题，留作参考。 
+abstract: 使用GitHub Pages做博客十分方便，因此也很受欢迎，但新手使用时总会遇到各种问题，本文总结了我自己在使用jekyll在GitHub Pages上搭建博客时遇到的一些问题，留作参考。
 category: technical
 permalink: blog-pitfalls
 author: 木逸辰
