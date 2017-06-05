@@ -20,33 +20,33 @@ tags: [tech, bash]
 		re=`ps -ex | grep $1 | grep -v grep`
 
 		#判断结果是否为空，为空就代表已退出了，重新打开并记录日志
-	    if [ -z "$re" ]; then
-	        open $1
-	        log
-	    fi
+		if [ -z "$re" ]; then
+			open $1
+			log
+		fi
 	}
 
 循环检测的代码（我为了省事儿直接把app名称写死这儿了，当然也可以使用变量，获得更好的灵活性）：
 
 	function watch(){
 		#每隔3秒检测一次
-	    while true; do
-	        detect "/Applications/BaiduNetdisk_mac.app"
-	        sleep 3
-	     done
-	 }
+		while true; do
+			detect "/Applications/BaiduNetdisk_mac.app"
+			sleep 3
+		done
+	}
 
 最后是记录日志的代码：
 
 	function log(){
 		#记录写入 watcher.log文件
 		if [ ! -f "watcher.log" ]; then
-	        touch "watcher.log"
-	    fi
+			touch "watcher.log"
+		fi
 
 		#获取当前时间并格式化
-	    dt=`date '+%Y-%m-%d %H:%M:%S'`
-	    echo "Restarted at $dt\n" >> watcher.log
+		dt=`date '+%Y-%m-%d %H:%M:%S'`
+		echo "Restarted at $dt\n" >> watcher.log
 	}
 
 最后在文件结尾调用`watch`方法即可。这里注意的是，`bash`里的`=` 前后绝对不能有空格，不然会被当作命令，出现错误。另外`bash`里面对函数的调用必须在定义之后，所以整体代码如图：

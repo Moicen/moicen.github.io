@@ -23,9 +23,9 @@
         {% endif %}
         <ul>
             <li>
-                {% if page.url === '/about' %}
+                {% if page.url == '/about' %}
                     <a href="/"><strong>Index</strong></a>
-                {% elseif page.url === '/' %}
+                {% elsif page.url == '/' %}
                     <a href="/about"><strong>About</strong></a>
                 {% endif %}
             </li>
