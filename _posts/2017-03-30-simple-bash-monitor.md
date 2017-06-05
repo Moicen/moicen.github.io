@@ -18,6 +18,7 @@ tags: [tech, bash]
 		#ps -ex 返回所有正在运行的进程信息，根据名称过滤
 		#因为同时会返回后面那条 grep $1 指令的进程，所以再过滤一遍把这个去掉
 		re=`ps -ex | grep $1 | grep -v grep`
+
 		#判断结果是否为空，为空就代表已退出了，重新打开并记录日志
 	    if [ -z "$re" ]; then
 	        open $1
@@ -42,12 +43,13 @@ tags: [tech, bash]
 		if [ ! -f "watcher.log" ]; then
 	        touch "watcher.log"
 	    fi
+
 		#获取当前时间并格式化
 	    dt=`date '+%Y-%m-%d %H:%M:%S'`
 	    echo "Restarted at $dt\n" >> watcher.log
 	}
 
-最后在文件结尾调用`watch`方法即可。这里注意的是，bash里面对函数的调用必须在定义之后，所以整体代码如图：
+最后在文件结尾调用`watch`方法即可。这里注意的是，`bash`里的`=` 前后绝对不能有空格，不然会被当作命令，出现错误。另外`bash`里面对函数的调用必须在定义之后，所以整体代码如图：
 
 ![bash](/assets/images/2017-06-05-bash.png)
 
