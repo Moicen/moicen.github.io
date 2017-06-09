@@ -12,24 +12,53 @@ tags: [tech, c, pointer]
 
 用C写个`binary search`程序，习惯性在函数里直接取数组长度：
 
-![binary search](/assets/images/2017-06-07-c-array-args-2-pointer-1.png)
+    int binary_search(int list[], int target)
+    {
+        int size = (int) (sizeof(list) / sizeof(int));
+        int low = 0, high = size, mid;
+        while(low <= high){
+            mid = (low + high) / 2;
+            if(list[mid] == target) return mid;
+            if(list[mid] > target) high = mid - 1;
+            else low = mid + 1;
+        }
+        return -1;
+    }
 
 编译时弹出`warning`：
 
-![binary search warning](/assets/images/2017-06-07-c-array-args-2-pointer-2.png)
+![binary search warning](/assets/images/2017-06-07-c-array-args-2-pointer-1.png)
 
 运行结果显然也不对。搜索了下，发现是C语言对`array`类型参数做了隐式转换：
 
-![binary search trans](/assets/images/2017-06-07-c-array-args-2-pointer-3.png)
+![binary search trans](/assets/images/2017-06-07-c-array-args-2-pointer-2.png)
 
 所以在函数中对`array`参数求`sizeof`，就是计算的对应指针的`size`，计算对象变了，所以结果也变了。
 然后就好奇了，对一个指针计算`sizeof`会得出多少？于是分别在`search`函数外部和内部计算了一下`sizeof`，针对同一个int数组：
 
-![binary search sizeof](/assets/images/2017-06-07-c-array-args-2-pointer-4.png)
+
+    #include <stdio.h>
+
+    int binary_search(int[], int, int);
+
+    int main()
+    {
+        int my_list[] = {1, 3, 5, 7, 9, 11, 13, 15, 17, 19};
+        int size = (int) (sizeof(my_list) / sizeof(int));
+        printf("sizeof int: %lu\n", sizeof(int));
+        printf("sizeof int[10]: %lu\n", sizeof my_list);
+        binary_search(my_list, size, 3);
+        }
+
+    int binary_search(int list[], int size, int target)
+    {
+        printf("sizeof pointer to int[10]: %lu\n", sizeof list);
+        return -1;
+    }
 
 结果：
 
-![binary search sizeof](/assets/images/2017-06-07-c-array-args-2-pointer-5.png)
+![binary search sizeof](/assets/images/2017-06-07-c-array-args-2-pointer-3.png)
 
 第一个`40`很好理解，不过`pointer`的`size`为`8`感觉很奇怪，搜了一下，据说一般会返回跟`sizeof(int)`一致的结果，那么为啥这儿`int`返回`4`，`pointer`返回`8`？于是又到处找，翻了许久的文档，终于找到一个说明[64-bit data models](https://en.wikipedia.org/wiki/64-bit_computing#64-bit_data_models)：
 
