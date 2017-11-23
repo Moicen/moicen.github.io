@@ -17,7 +17,7 @@ tags: [tech, javascript, code style]
 |        规则      |       示例       |
 |------------------|-----------------|
 | 变量、属性及函数的命名遵循驼峰命名法(camelCase) | `productChange` |
-| 变量名可包含数字 | | `i18n` |
+| 变量名可包含数字 | `i18n` |
 | 局部变量不能与更大作用域的变量重名 | N/A |
 | 常量及枚举型使用全大写格式 | `CONSTANTS` `SETTING` |
 | 构造函数首字母必须大写 | `FlightSearch` |
