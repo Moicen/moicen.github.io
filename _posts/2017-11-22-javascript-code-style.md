@@ -19,17 +19,17 @@ tags: [tech, javascript, code style]
 | 变量、属性及函数的命名遵循驼峰命名法(camelCase) | `productChange` |
 | 变量名可包含数字 | `i18n` |
 | 局部变量不能与更大作用域的变量重名 | N/A |
-| 常量及枚举型使用全大写格式 | `CONSTANTS` `SETTING` |
+| 常量及枚举型使用全大写格式，多个单词之间使用下划线 | `CONSTANTS` `SETTING` |
 | 构造函数首字母必须大写 | `FlightSearch` |
 | 变量命名必须体现变量的意义 | `flights` `traveller` |
-| 函数命名使用动词 | `search` `render` `travel` `transform` |
+| 函数命名使用动词(作为对象属性时根据设计可以例外) | `search` `render` `travel` `transform` |
 | 其他类型使用名词或形容词 | `traveller` `length` `valid` `transformer` |
 | 数组等表示多个的变量使用复数形式(`data`、`list`除外) | `tickets` `passengers` |
 | 变量命名在保证无歧义的条件下尽量精简，但只能使用约定俗成的缩写 | `len` `init` `param` `index` `idx` `utils` |
 | 循环索引变量使用`i`、`j`、`k`、`idx`、`index`，不得使用其他名称| N/A |
 
 *不得使用的变量形式*
-- `_get`、`set_name` 等下划线开头的名称
+- `_get`、`set_name` 普通变量命名不得使用下划线
 - `string` `Object` `null` `undefined` `array` `number` 等关键字或保留字
 - `a`、`b`、`a1` 等无具体含义的名称
 - `obj`、`arr` 等非约定俗称的缩写
