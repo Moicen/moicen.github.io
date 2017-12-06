@@ -10,6 +10,8 @@ tags: [tech, nodejs]
 
 ### {{ page.title }}
 
+已集成第三方登录功能为插件，发布于[NPM](https://www.npmjs.com/package/third-party-login)，可直接安装使用，方便省事儿。
+
 最近项目中要用到第三方登录，因为自己此前从未接触过，加之时间仓促，因而踩了不少坑，在此记录下。
 
 项目中需要实现[微博](https://weibo.com)、[微信](http://weixin.qq.com)、[支付宝](https://www.alipay.com)三家平台的第三方登录。先翻看了下三家开放平台的文档，流程其实很简单：
