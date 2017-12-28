@@ -31,7 +31,7 @@ tags: [tech, javascript, event loop, callback, task queue, async]
 
 ![event-loop](/assets/images/2017-12-28-event-loop.png)
 
-上面这张图（来自[《Help, I'm stuck in an event-loop》](https://vimeo.com/96425312)，是浏览器的处理JavaScript的机制。可以看到，这里有两个逻辑块，一个是运行JS代码的主线程，负责执行JS代码和内存的分配管理。另一个是各种WebAPIs，处理各种异步任务。
+上面这张图（来自[《Help, I'm stuck in an event-loop》](https://vimeo.com/96425312)），是浏览器的处理JavaScript的机制。可以看到，这里有两个逻辑块，一个是运行JS代码的主线程，负责执行JS代码和内存的分配管理。另一个是各种WebAPIs，处理各种异步任务。
 
 JS开始执行后，主线程按代码顺序调用各函数，把函数压入栈中，执行，结束后再把函数推出去。当遇到需要异步处理的任务是，浏览器会把其中的异步任务分离出来，交给相应的WebAPI线程（如`setTimeout`交给timer模块，`ajax`交给网络模块，页面元素事件交给DOM模块）去做。此时主线程里相应的函数已经完成了自己的使命，被推出栈，主线程继续执行后面的代码。
 
