@@ -1,7 +1,7 @@
 ---
 layout: post
 title: JavaScript事件轮询与异步机制
-abstract:
+abstract: 单线程的JavaScript如何解决并发问题
 category: technical
 permalink: javascript-event-loop-and-async
 author: 木逸辰
