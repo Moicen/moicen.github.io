@@ -67,5 +67,3 @@ tags: [tech, c, pointer]
 >In many programming environments for C and C-derived languages on 64-bit machines, int variables are still 32 bits wide, but long integers and pointers are 64 bits wide. These are described as having an LP64 data model. Another alternative is the ILP64 data model in which all three data types are 64 bits wide, and even SILP64 where short integers are also 64 bits wide.[40] However, in most cases the modifications required are relatively minor and straightforward, and many well-written programs can simply be recompiled for the new environment with no changes. Another alternative is the LLP64 model, which maintains compatibility with 32-bit code by leaving both int and long as 32-bit. LL refers to the long long integer type, which is at least 64 bits on all platforms, including 32-bit environments.
 
 按这里所说，64位机器上，`sizeof(int)`理论上应该返回`8`，`sizeof(pointer)`也是如此，但实际是现在大部分64位机器上`sizof(int)`返回的值依旧与32位机器一致，而`sizeof(pointer)`返回的是按照64位计算的结果。
-
-到此为止，再继续深入的已经不太看得懂了，待以后慢慢学习。
