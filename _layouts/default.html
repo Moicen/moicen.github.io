@@ -21,13 +21,13 @@
         {% if site.description or site.github.project_tagline %}
           <p>{{ site.description | default: site.github.project_tagline }}</p>
         {% endif %}
+        {% if page.url == '/about' %}
         <ul>
             <li>
-                {% if page.url == '/about' %}
-                    <a href="/"><strong>Index</strong></a>
-                {% endif %}
+                <a href="/"><strong>Index</strong></a>
             </li>
         </ul>
+        {% endif %}
       </header>
       <section>
 
