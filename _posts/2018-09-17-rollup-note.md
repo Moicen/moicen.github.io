@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 使用rollup.js打包文件
+title: 使用rollup.js打包文件
 abstract: 简单记录下对rollup.js的使用
 category: technical
 permalink: rollup-note
