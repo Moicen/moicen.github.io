@@ -17,11 +17,11 @@ tags: [tech, js, rollup, pack]
 
 如果要使用命令行进行打包，可以全局安装：
 ```js
-npm install —global rollup
+npm install --global rollup
 ```
 在项目中使用，可以本地安装：
 ```js
-npm install rollup —save-dev
+npm install rollup --save-dev
 ```
 
 `rollup.js`有许多相关的插件，可以帮助处理打包过程中的需要，比如`rollup-plugin-json`插件可以读取到`package.json`文件中的内容（项目名、版本号等），方便进行版本号的输出。
