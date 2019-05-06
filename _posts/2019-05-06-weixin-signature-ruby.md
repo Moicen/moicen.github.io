@@ -1,3 +1,4 @@
+---
 layout: post
 title: 微信公众号服务器接口配置及数字签名验证-ruby版
 abstract: 微信公众号服务器接口配置及数字签名验证-ruby版
