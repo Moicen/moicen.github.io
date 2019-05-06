@@ -12,12 +12,12 @@ tags: [tech, weixin, signature, ruby]
 
 在微信平台开发时，如果配置了服务器地址，则微信会废除自定义菜单和自动回复，转而将用于的交互信息发送到开发者所配置的服务器地址，让开发者自行处理。
 
-![weixin server](/assets/images/2019-05-06-wexin-server-url.png)
+![weixin server](/assets/images/2019-05-06-weixin-server-url.png)
 
 
 同时微信会对数据进行签名，用于安全性校验：
 
-![weixin signature](/assets/images/2019-05-06-wexin-signature.jpg)
+![weixin signature](/assets/images/2019-05-06-weixin-signature.jpg)
 
 下面记录下使用ruby进行签名校验的过程。
 
