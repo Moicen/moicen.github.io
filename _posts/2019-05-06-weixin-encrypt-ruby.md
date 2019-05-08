@@ -22,9 +22,9 @@ tags: [tech, weixin, encrypt, ruby]
 ```ruby
     encryptedData = "zvwk2PxUokScXLvuqAJ9AoF9EcFD2Zgl8Hl2QJnFT81z8cFCX2wNPnc5KERJYOUvq9MJIuw4oa2Kf841L2yXbDWLQhw6sRlTTOCoCyvBSYuFcmsMqDkQ/0m30AKnoFCWHp++VHW6fi82FPfQWYKHAmhCrbLq8cOTVb1ABvDlJixdgpJJDA/5V6IL34eJLay6M/r86sLBhYtOZDWGXxq4AWofJTWvVnPFPu5Zue1ETdBRBIANXYpNxqkhDuhRWXkgVzx7DaO/UXkEbWf3UDfoBXRxQx0dFQI74X1a5BTlNr2ghDbjYcwXhYU2qwClF2thnQ5dPbwwDvLvtlynGlQ+nxHnSWxKbAzJNp8omUt1sPG4Z8VOUG9+6OQXseHG3oeskskhwZFuVZhM164MFxo+D5K968LNA9ew793g1xgPKEwLs+tk+lbMJQaOJvwXq5S6yMFPbSR86VzbjIOsZJ8xKRNsEOGHuD8lFWvjC1GGPOT+xu+s35fE17LGtrlllEIVknrULlkXi7hEvqGMKr6C5g=="
 
-    iv = "5vcM4VWJ9jYVz2GqqV949w=="
+    iv = "iv"
 
-    session_key = "qGo4oIyigQwn4kfpSavOzg=="
+    session_key = "session_key"
 ```
 
 按照微信文档所述，使用`AES-128-CBC`算法解密：
