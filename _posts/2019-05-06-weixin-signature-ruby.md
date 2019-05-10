@@ -5,21 +5,18 @@ abstract: 微信公众号服务器接口配置及数字签名验证-ruby版
 category: technical
 permalink: weixin-server-signature-ruby
 author: 木逸辰
-tags: [tech, weixin, signature, ruby]
+tags: [tech, weixin, signature, ruby, rails]
 ---
 
 ### {{ page.title }}
 
-在微信平台开发时，如果配置了服务器地址，则微信会废除自定义菜单和自动回复，转而将用于的交互信息发送到开发者所配置的服务器地址，让开发者自行处理。
+在微信平台开发时，可以配置一个服务器地址，自行处理用户在与服务号的交互事件，也可以添加自定义菜单。
 
 ![weixin server](/assets/images/2019-05-06-weixin-server-url.png)
 
-
-同时微信会对数据进行签名，用于安全性校验：
+微信在将数据转发到开发者配置的地址时，会发送get请求校验地址是否正确，下面记录下使用ruby进行签名校验的过程。
 
 ![weixin signature](/assets/images/2019-05-06-weixin-signature.jpg)
-
-下面记录下使用ruby进行签名校验的过程。
 
 先定义一个用于校验签名的方法：
 
@@ -87,3 +84,54 @@ tags: [tech, weixin, signature, ruby]
 ```
 
 
+最后，微信在配置了服务器地址后，会将服务号中的交互事件全部转发到开发者配置的地址，同时也会废除在开放平台里配置的菜单，需要调用[自定义菜单创建接口](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141013)另行创建。
+
+菜单参数示例：
+```json
+{
+  "button": [
+    {
+      "name": "关于我们",
+      "sub_button": [
+        {
+          "type": "view",
+          "name": "官方主页",
+          "url": "https://my-domain.com",
+          "sub_button": []
+        },
+        {
+          "type": "view",
+          "name": "服务一",
+          "url": "https://my-domain.com/service1",
+          "sub_button": []
+        },
+        {
+          "type": "view",
+          "name": "加入我们",
+          "url": "https://my-doman.com/contract",
+          "sub_button": []
+        }
+      ]
+    },
+    {
+      "name": "企业服务",
+      "sub_button": [
+        {
+          "type": "miniprogram",
+          "name": "服务二",
+          "url": "https://my-domain.com/service2",
+          "appid": "miniprogram1 appid",
+          "pagepath": "pages/index/index"
+        },
+        {
+          "type": "miniprogram",
+          "name": "服务三",
+          "url": "https://my-domain.com/service3",
+          "appid": "miniprogram2 appid",
+          "pagepath": "pages/index/index"
+        }
+      ]
+    }
+  ]
+}
+```
