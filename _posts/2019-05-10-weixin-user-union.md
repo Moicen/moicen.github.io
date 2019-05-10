@@ -96,7 +96,7 @@ end
   
 ```
 
-小程序这边，用于进入小城之后，即可拿到`openid`，但是要获取其他信息，必须用户授权，或者关注了同主体公众号。
+小程序这边，用于进入小程序之后，即可拿到`openid`，但是要获取其他信息，必须用户授权，或者关注了同主体公众号。
 在小程序首页，提供授权按钮让用户授权，授权完毕，调用微信的登录方法，获取用户信息和临时认证`code`，发送到后台。
 此时可以设置`withCredentials=true`，可以拿到敏感数据信息（`openid`、`unionid`、手机号等）。
 
@@ -120,13 +120,7 @@ const identify = (instance, params, server) => {
         })
       } else {
         warn(res.data.message)
-        instance.setData({ loading: false })
       }
-    },
-    fail: function (res) {
-      instance.setData({
-        loading: false
-      })
     }
   })
 }
@@ -149,22 +143,11 @@ const login = (instance) => {
             }
             // 请求后台，换取openid和unionid
             identify(instance, data, server);
-          },
-          fail: function (res) {
-            // 用户未授权，显示授权按钮
-            instance.setData({
-              loading: false
-            })
           }
         })
       } else {
         console.log('获取用户登录态失败！' + res.errMsg);
       }
-    },
-    fail: function (res) {
-      instance.setData({
-        loading: false
-      })
     }
   })
 }
@@ -172,8 +155,6 @@ const login = (instance) => {
 Page({
   data: {
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    loading: true
-
   },
   bindGetUserInfo(e) {
     login(this)
@@ -195,17 +176,7 @@ Page({
           } else {
             login(instance)
           }
-        } else {
-          instance.setData({
-            loading: false
-          })
         }
-      },
-      fail: function (res) {
-        instance.setData({
-          loading: false
-        })
-      }
     })
 
   }
@@ -250,21 +221,20 @@ Page({
 - 如果小程序登录，则还有`user_id`
 - 如果公众号事件，则还有`openid`
 - 根据`unionid`查询
-    1. `unionid`有记录，对比`user_id`
-        1. 如果`user_id`不同，则需要先将当前`user_id`对应的数据的`user_id`和`mp_openid`清除掉，再将本条记录的`user_id`更新成当前用户
-        2. 如果`user_id`相同，则判断`openid`是否存在，若不存在，则读取并更新
-    2. `unionid`无记录，则根据`user_id`查,并根据`unionid`读取新的`openid`，
-        1. 如果有记录，则更新对应的`unionid`和`openid`
-        2. 如果没有记录，添加新记录
+  1. `unionid`有记录，对比`user_id`
+    1. 如果`user_id`不同，则需要先将当前`user_id`对应的数据的`user_id`和`mp_openid`清除掉，再将本条记录的`user_id`更新成当前用户
+     2. 如果`user_id`相同，则判断`openid`是否存在，若不存在，则读取并更新
+  2. `unionid`无记录，则根据`user_id`查,并根据`unionid`读取新的`openid`，
+    1. 如果有记录，则更新对应的`unionid`和`openid`
+    2. 如果没有记录，添加新记录
 
 ```ruby
   class AuthenticateUser
     prepend SimpleCommand
   
-    def initialize(username, password, source = "web", mp_openid = nil, unionid = nil)
+    def initialize(username, password, mp_openid = nil, unionid = nil)
       @username = username
       @password = password
-      @source = source
       @mp_openid = mp_openid
       @unionid = unionid
     end
@@ -321,6 +291,19 @@ Page({
 因为微信未提供直接根据`unionid`获取`openid`的接口，因此只能读取公众号所有关注者`openid`，循环调接口读取对应的`unionid`，与已有数据判断。
 
 ```ruby
+
+  def get_openid
+    openid = nil
+    get_followers.each do |fo|
+      unionid = get_unionid_by_openid(fo)
+      if @unionid == unionid
+        openid = fo
+        break
+      end
+    end
+    openid
+  end
+
   def get_followers
     openIds = []
     require 'net/http'
@@ -338,23 +321,12 @@ Page({
     openIds
   end
     
-    def get_unionid_by_openid(openid)
-      url = URI("https://api.weixin.qq.com/cgi-bin/user/info?access_token=#{wechat_token}&openid=#{openid}")
-      res = JSON.parse(Net::HTTP.get(url))
-      res["unionid"]
-    end
+  def get_unionid_by_openid(openid)
+    url = URI("https://api.weixin.qq.com/cgi-bin/user/info?access_token=#{wechat_token}&openid=#{openid}")
+    res = JSON.parse(Net::HTTP.get(url))
+    res["unionid"]
+  end
   
-    def get_openid
-      openid = nil
-      get_followers.each do |fo|
-        unionid = get_unionid_by_openid(fo)
-        if @unionid == unionid
-          openid = fo
-          break
-        end
-      end
-      openid
-    end
 ```
 
 
