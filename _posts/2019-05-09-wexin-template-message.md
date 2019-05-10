@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 微信公众号模板消息推送
+title: 【微信开发之三】公众号模板消息推送
 abstract: 记录下如何使用微信的模板消息给关注公众号的用户进行推送
 category: technical
 permalink: wexin-template-push

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 微信加密数据解密-ruby版
+title: 【微信开发之一】加密数据解密-ruby版
 abstract: 微信加密数据解密-ruby版
 category: technical
 permalink: weixin-encrypt-ruby

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 微信服务号、小程序与项目自有账号体系关联绑定-ruby版
+title: 【微信开发之四】微信账号与自有账号体系绑定-ruby版
 abstract: 如何将微信服务号的关注者、小程序使用者与自有账号体系关联
 category: technical
 permalink: weixin-user-union-ruby
