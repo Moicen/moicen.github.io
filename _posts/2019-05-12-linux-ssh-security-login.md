@@ -43,7 +43,7 @@ MaxAuthTries 3
 
 4. 在本机登录新建用户`ssh moicen@server`:
 
-![ssh login without password](2019-05-12-moicen-ssh-login.jpg)
+![ssh login without password](/assets/images/2019-05-12-moicen-ssh-login.jpg)
 
 
 
