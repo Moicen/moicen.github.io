@@ -23,7 +23,7 @@ repository: moicen/moicen.github.io
 author: 木逸辰
 # Build settings
 markdown: kramdown
-theme: jekyll-theme-modernist
+theme: jekyll-theme-hacker
 gems:
     - jekyll-feed
     - jekyll-github-metadata
