@@ -84,23 +84,23 @@ end
 
 `JWT`模块对外提供一个`encode`方法和一个`decode`方法，用来编码和解码数据，生成唯一标识token。
 
-![jwt](/images/2019-05-26-rails-jwt.png)
+![jwt](/assets/images/2019-05-26-rails-jwt.png)
 
 `JWT`的编码机制实现了 [jwt](https://jwt.io/) 规范
 
-![jwt encode](/images/2019-05-26-jwt-encode.png)
+![jwt encode](/assets/images/2019-05-26-jwt-encode.png)
 
 生成的token数据包含三个部分：`header`、`payload`、`signature`，并且自己维护了一套过期机制：
 
-![jwt](/images/2019-05-26-jwt.png)
+![jwt](/assets/images/2019-05-26-jwt.png)
 
 用Wireshark看看当前项目登录后生成的token：
 
-![token](/images/2019-05-26-login-token.png)
+![token](/assets/images/2019-05-26-login-token.png)
 
 在后续请求中token被放到header中的Authorization字段
 
-![authorization](/images/2019-05-26-request-header-token.png)
+![authorization](/assets/images/2019-05-26-request-header-token.png)
 
 server端添加一个过滤器，对所有需要权限校验的接口进行过滤：
 ```ruby
@@ -114,11 +114,11 @@ server端添加一个过滤器，对所有需要权限校验的接口进行过�
 
 `AuthorizeRequest`类调用`JsonWebToken`的`decode`方法，从token中获取`user_id`，如果成功，则使用该`user_id`从数据库读取数据，并返回，否则即返回401:
 
-![auth request](/images/2019-05-26-auth-req.png)
+![auth request](/assets/images/2019-05-26-auth-req.png)
 
 接下来看看`jwt`的过期机制。先进行两次连续登录操作，模拟不同浏览器登录：
 
-![parall login](/images/2019-05-26-parall-login.png)
+![parall login](/assets/images/2019-05-26-parall-login.png)
 
 获得两个token，直接使用第一次登录后的token调用接口，执行成功，说明后续登录不会挤掉之前的会话。
 
@@ -131,11 +131,11 @@ def encode(payload, exp = 1.minutes.from_now)
 end
 ```
 
-![jwt expire](/images/2019-05-26-jwt-exp.png)
+![jwt expire](/assets/images/2019-05-26-jwt-exp.png)
 
 1分钟之后，再次使用之前的两个token调用接口，返回401，说明`jwt`确实是自己维护了一套过期机制，查看它的代码：
 
-![jwt verify](/images/2019-05-26-jwt-verify.png)
+![jwt verify](/assets/images/2019-05-26-jwt-verify.png)
 
 可以看到这里有一系列的校验`verify_aud verify_expiration verify_iat verify_iss verify_jti verify_not_before verify_sub`，校验过期的代码：
 
@@ -150,14 +150,14 @@ end
 
 3. `JWT`实际只是提供了一个编码和解码的功能，而且自身不保存任何状态，因此如果登录拿到token之后，只要不重新登录，即便服务重启，之前的 token依旧有效。如将过期时间改回24小时，重新登录，然后立即重启服务器
 
-![jwt restart expire](/images/2019-05-26-jwt-restart-exp.png)
+![jwt restart expire](/assets/images/2019-05-26-jwt-restart-exp.png)
 
 使用刚才登录得到的token调用接口，token依旧有效。
 
 那么如果要实现服务重启后token失效，则需要自己另外处理，我这里是使用了一个`@@tokens`变量保存所有的token，做解码之前会先校验当前token是否存在与这个变量里，因此如果服务重启 ，则变量清空，之前的token失效。
 
-![jwt](/images/2019-05-26-token-save.png)
-![jwt](/images/2019-05-26-saved-token-check.png)
+![jwt](/assets/images/2019-05-26-token-save.png)
+![jwt](/assets/images/2019-05-26-saved-token-check.png)
 
 当然也可以把这些token保存在redis中，使用redis的expiration功能。
 
