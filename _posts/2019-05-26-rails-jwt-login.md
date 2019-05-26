@@ -15,7 +15,7 @@ tags: [tech, rails, jwt, login, authenticate]
 
 先看看代码里是如何使用的。我这里使用的是一个叫`jwt`的gem。
 
-从登录开始，拿到username和password之后，调用方法校验，并在成功后返回一个token：
+#### 从登录开始，拿到username和password之后，调用方法校验，并在成功后返回一个token：
 
 ```ruby
 def login
@@ -94,7 +94,7 @@ end
 
 ![jwt](/assets/images/2019-05-26-jwt.png)
 
-用Wireshark看看当前项目登录后生成的token：
+#### 用Wireshark看看当前项目登录后生成的token：
 
 ![token](/assets/images/2019-05-26-login-token.png)
 
@@ -116,13 +116,13 @@ server端添加一个过滤器，对所有需要权限校验的接口进行过�
 
 ![auth request](/assets/images/2019-05-26-auth-req.png)
 
-接下来看看`jwt`的过期机制。先进行两次连续登录操作，模拟不同浏览器登录：
+#### 接下来看看`jwt`的过期机制。先进行两次连续登录操作，模拟不同浏览器登录：
 
 ![parall login](/assets/images/2019-05-26-parall-login.png)
 
 获得两个token，直接使用第一次登录后的token调用接口，执行成功，说明后续登录不会挤掉之前的会话。
 
-2. 将`jwt`过期时间设置为1分钟，用于测试，注意，这里的`1.minutes.from_now`是`active_support`提供的功能
+将`jwt`过期时间设置为1分钟，用于测试，注意，这里的`1.minutes.from_now`是`active_support`提供的功能
 
 ```ruby
 def encode(payload, exp = 1.minutes.from_now)
@@ -148,7 +148,7 @@ end
 
 可以看到`JWT`实际是使用token中解码得来的`exp`属性，与当前时间比较来判断是否过期。因此如果在`encode`的时候不设置`exp`，则对应生成的token就一直不会过期。
 
-3. `JWT`实际只是提供了一个编码和解码的功能，而且自身不保存任何状态，因此如果登录拿到token之后，只要不重新登录，即便服务重启，之前的 token依旧有效。如将过期时间改回24小时，重新登录，然后立即重启服务器
+#### `JWT`实际只是提供了一个编码和解码的功能，而且自身不保存任何状态，因此如果登录拿到token之后，只要不重新登录，即便服务重启，之前的 token依旧有效。如将过期时间改回24小时，重新登录，然后立即重启服务器
 
 ![jwt restart expire](/assets/images/2019-05-26-jwt-restart-exp.png)
 
