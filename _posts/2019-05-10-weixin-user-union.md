@@ -211,7 +211,7 @@ Page({
   end
 ```
 
-如果此时不符合UnionId机制，则只能获取到`openid`，无法获取到`unionid`，就需要解密用户信息中的加密数据，具体参见[微信加密数据解密-ruby版](http://moicen.com/weixin-encrypt-ruby)。
+如果此时不符合UnionId机制，则只能获取到`openid`，无法获取到`unionid`，就需要解密用户信息中的加密数据，具体参见[微信加密数据解密-ruby版](/weixin-encrypt-ruby)。
 
 拿到用户的`openid`和`unionid`之后，返回给小程序端，接下来小程序进入登录页面，用户输入用户名密码登录时，则可以把前面获取到的`openid`和`unionid`一起发送给后端，将自有账号与小程序账号关联起来。
 
