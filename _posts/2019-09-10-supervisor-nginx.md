@@ -53,6 +53,6 @@ $ supervisord -c /etc/supervisor.d/default.ini
 
 supervisor默认使用9001端口提供一个web控制台，可以直接在里面对所管理的服务进行管理：
 
-![supervisor](/assets/images/2019-09-10-supervisor-nginx.jpg)
+![supervisor](/assets/images/2019-09-10-supervisor-nginx.png)
 
 这里supervisor的配置也有`nodaemon=true`，使其运行在forground，这里是为了方便在使用docker-compose的时候将supervisor的日志输出到docker-compose这一层，方便观察进程状态
