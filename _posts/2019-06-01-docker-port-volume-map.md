@@ -22,7 +22,7 @@ tags: [tech, docker, map, volume port]
 
 如果要从host访问容器中的http服务，只是映射端口的话，从host可能依旧无法访问容器内的服务：
 
-![port-map](/assets/images/2019-09-15-docker-port-map.png)
+![port-map](/assets/images/2019-06-01-docker-port-map.png)
 
 检查配置之后，发现是容器里的http服务只侦听里`127.0.0.1`的IP，也就是只能从这个容器里面才能访问到服务，如果要从host也能访问到，则需要侦听`0.0.0.0`IP，即所有IP。
 
@@ -33,4 +33,4 @@ port=0.0.0.0:9001
 
 重新启动，从host访问成功。
 
-![port-map](/assets/images/2019-09-15-docker-port-map-supervisor.png)
+![port-map](/assets/images/2019-06-01-docker-port-map-supervisor.png)
