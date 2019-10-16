@@ -3,9 +3,9 @@ layout: post
 title: 使用Flyway做数据库结构的自动化迁移
 abstract: 使用Flyway做数据库结构的自动化迁移
 category: technical
-permalink: flyway-migration-example
+permalink: database-migration-with-flyway
 author: 木逸辰
-tags: [tech, flyway, database]
+tags: [tech, flyway, database, hibernate]
 ---
 
 ### {{ page.title }}
