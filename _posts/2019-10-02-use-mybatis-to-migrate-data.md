@@ -52,35 +52,7 @@ public interface DataMigrationHistoryMapper {
 
 定义接口里面使用的执行类，使用MyBatis 3提供的Dynamic SQL，可以很好地防止SQL语句的书写错误。
 
-```java
-import org.apache.ibatis.jdbc.SQL;
-
-public class DataMigrationHistoryHandler {
-
-    public String count() {
-        return new SQL() {{
-            SELECT("count(*)");
-            FROM("data_migration_history");
-            WHERE("version = #{version}");
-        }}.toString();
-    }
-
-    public String insert() {
-        return new SQL() {{
-            INSERT_INTO("data_migration_history");
-            VALUES("version, execute_at", "#{version}, #{executeAt}");
-        }}.toString();
-    }
-
-    public String list() {
-        return new SQL() {{
-            SELECT("*");
-            FROM("data_migration_history");
-        }}.toString();
-    }
-
-}
-```
+![dynamic sql](/assets/images/2019-10-02-mybatis-dynamic-sql.jpg)
 
 定义`Migration`类执行具体的迁移方法：
 
