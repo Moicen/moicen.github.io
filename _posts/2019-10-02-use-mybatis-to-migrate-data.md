@@ -29,6 +29,46 @@ tags: [tech, database, mybatis]
 </dependency>
 ```
 
+添加一张表用于记录变更记录；
+
+```sql
+create table data_migration_history (
+    version varchar(255) not null unique ,
+    execute_at timestamp not null
+);
+```
+
+```java
+import java.util.Date;
+
+
+public class DataMigrationHistory {
+
+    private String version;
+
+    private Date executeAt;
+
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public Date getExecuteAt() {
+        return executeAt;
+    }
+
+    public void setExecuteAt(Date executeAt) {
+        this.executeAt = executeAt;
+    }
+}
+
+```
+
+
 为实体类定义一个映射接口：
 
 ```java
