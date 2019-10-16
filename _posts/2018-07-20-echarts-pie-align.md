@@ -3,7 +3,7 @@ layout: post
 title: Echarts饼图标题居中
 abstract: 设置Echarts饼图标题居中
 category: technical
-permalink: echarts-chrome-legend-align
+permalink: echarts-pie-align
 author: 木逸辰
 tags: [tech, echarts, chrome]
 ---

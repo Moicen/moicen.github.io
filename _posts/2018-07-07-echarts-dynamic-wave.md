@@ -28,8 +28,8 @@ series: [{
         color: new echarts.graphic.LinearGradient(
             0, 0, x2, y2,
             [
-                {offset: 1, color: “#38fa8f”}
-                {offset: 1, color: “#038048”}
+                {offset: 1, color: "#38fa8f"}
+                {offset: 1, color: "#038048"}
             ]
         )
     }
