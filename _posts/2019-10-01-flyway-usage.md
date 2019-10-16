@@ -33,15 +33,15 @@ tags: [tech, flyway, database]
 
 安装好之后，在Maven的窗体的Plugins里面可以看到Flyway：
 
-![flyway maven](/asserts/images/2019-10-01-flyway-mvn.jpg)
+![flyway maven](/assets/images/2019-10-01-flyway-mvn.jpg)
 
 Flyway从`resource/db/migration`目录读取SQL迁移脚本：
 
-![flyway scripts](/asserts/images/2019-10-01-flyway-scripts.jpg)
+![flyway scripts](/assets/images/2019-10-01-flyway-scripts.jpg)
 
 双击执行`flyway:info`：
 
-![flyway info](/asserts/images/2019-10-01-flyway-info.jpg)
+![flyway info](/assets/images/2019-10-01-flyway-info.jpg)
 
 如果有多个数据库，需要针对不同的数据库分别执行迁移操作，那么可以在POM里配置多个`execution`：
 
@@ -79,20 +79,20 @@ Flyway从`resource/db/migration`目录读取SQL迁移脚本：
 
 此时双击执行mvn的任务会无法找到数据库，因为找不到默认的数据库配置。可以使用命令行执行：
 
-![flyway multi db](/asserts/images/2019-10-01-flyway-multi-db.jpg)
+![flyway multi db](/assets/images/2019-10-01-flyway-multi-db.jpg)
 
 使用`flyway:clean`可以清除掉数据库的所有版本记录（一般不应在生产环境使用）
 
-![flyway clean](/asserts/images/2019-10-01-flyway-clean.jpg)
+![flyway clean](/assets/images/2019-10-01-flyway-clean.jpg)
 
 可以看到，版本记录的状态已变成`pending`
 
 `flyway:migrate`是最常用的命令，用于执行所有未执行的数据库变更。
 
-![flyway migrate](/asserts/images/2019-10-01-flyway-migrate.jpg)
+![flyway migrate](/assets/images/2019-10-01-flyway-migrate.jpg)
 
 此时数据库的版本记录都是`success`状态了。
 
 Flyway在数据库中使用`flyway_schema_history`表做版本控制：
 
-![flyway version](/asserts/images/2019-10-01-flyway-version.jpg)
+![flyway version](/assets/images/2019-10-01-flyway-version.jpg)

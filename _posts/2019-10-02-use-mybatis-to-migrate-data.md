@@ -112,12 +112,12 @@ public class Migration20191003 extends Migration implements IMigration {
 
 最后定义一个从外部操作的入口：
 
-![migrator](/asserts/images/2019-10-02-mybatis-migrator.jpg)
+![migrator](/assets/images/2019-10-02-mybatis-migrator.jpg)
 
 `getMigrations`方法根据配置文件配置的规则读取所有的迁移类。`migrate`方法检查迁移是否已执行，对未执行过的类按顺序执行。`info`方法输出当前数据库的迁移状态。
 
 测试效果：
 
-![migrator](/asserts/images/2019-10-02-mybatis-migrator.jpg)
+![migrator](/assets/images/2019-10-02-mybatis-migrator.jpg)
 
-![migrator](/asserts/images/2019-10-02-mybatis-migrate.jpg)
+![migrator](/assets/images/2019-10-02-mybatis-migrate.jpg)
