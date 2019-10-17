@@ -188,5 +188,6 @@ public class User {
 调用`update`方法看生成的迁移SQL：
 
 ```sql
-    alter table user add column age integer;
+    alter table user 
+       add column age int4;
 ```
