@@ -229,6 +229,16 @@ public class MigrationTest {
 ```
 
 这里需要注意的是，hibernate只会正确识别到`main`目录下的`persistence.xml`，如果是写在`test`目录下，hibernate可以读取到，测试可以通过，但是无法输出SQL语句。
+如果需要针对多个数据库，可以在`persistence.xml`里添加多个`persistence-unit`，执行的时候指定名称就可以了：
+
+```xml
+<persistence-unit name="dev" transaction-type="RESOURCE_LOCAL">
+    <!--dev database config-->
+</persistence-unit>
+<persistence-unit name="test" transaction-type="RESOURCE_LOCAL">
+    <!--test database config-->
+</persistence-unit>
+```
 
 
 跑一把测试看生成的SQL语句，首先是`create`生成现有的完整SQL：
