@@ -99,10 +99,6 @@ import java.util.EnumSet;
 
 /**
  * 改变数据结构用这个输出sql，形成flyway的migration。
- * <p>
- * 注意： `org.hibernate.tool.hbm2ddl` to `DEBUG` can show the SQL like this:
- * <p>
- * 16:28:16.849 [main] DEBUG org.hibernate.SQL - alter table public.project_entity add column project_name varchar(255)
  */
 public class Migration {
 
@@ -141,6 +137,99 @@ public class Migration {
 
 如上，这个`Migration`类有两个方法，`create`方法使用`SchemaExport`输出完整的建库语句。`Update`方法对比JPA class和当前数据库结构，生成变化的SQL。
 这里需要配置`hibernate.hbm2ddl.auto=none`，这样就只输出SQL语句而不会操作数据库。另外也可以配置`show_sql=true`在控制台输出SQL。
+
+接下来要设置配置文件，并从配置文件中读取配置。Hibernate会读取`resources/META-INF/persistenc.xml`文件中的配置：
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+             xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+    <persistence-unit name="default" transaction-type="RESOURCE_LOCAL">
+        <properties>
+            <!--jdbc-->
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/foo" />
+            <property name="javax.persistence.jdbc.user" value="foo" />
+            <property name="javax.persistence.jdbc.password" value="" />
+            <!--hibernate-->
+            <property name="show_sql" value="true"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL92Dialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="none"/>
+            <property name="hibernate.temp.use_jdbc_metadata_defaults" value="false"/>
+            <property name="hibernate.implicit_naming_strategy" value="org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy"/>
+            <property name="hibernate.physical_naming_strategy" value="org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy"/>
+        </properties>
+    </persistence-unit>
+</persistence>
+```
+
+`jdbc`部分配置数据库连接相关，`hibernate`部分配置hibernate相关。如果只需执行`schemaExport`，也可以不配置`jdbc`部分，而把数据库连接配置到`hibernate`里面：
+
+```xml
+<property name="connection.driver_class" value="org.postgresql.Driver"/>
+<property name="connection.url" value="jdbc:postgresql://localhost:5432/math_ocr"/>
+<property name="connection.username" value="ocr"/>
+<property name="connection.password" value=""/>
+```
+
+
+但是如果要执行`schemaUpdate`，则必须配置`jdbc`部分，否则在执行`schemaUpdate`的时候会报`UnsupportedOperationException`异常:
+
+```
+java.lang.UnsupportedOperationException: The application must supply JDBC connections
+```
+
+另外再定义一个方法来读取配置生成hibernate需要的metadata:
+
+```java
+package com.moicen.resteasy.data.ddl;
+
+import org.hibernate.boot.Metadata;
+import org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl;
+
+import java.util.HashMap;
+
+public class MigrationFactory {
+
+    public static Metadata getMetaData(String persistenceUnit) {
+
+        EntityManagerFactoryBuilderImpl builder = new CustomHibernatePersistenceProvider()
+                .getEntityManagerFactoryBuilder(persistenceUnit, new HashMap<>());
+        builder.build();
+
+        return builder.getMetadata();
+    }
+}
+
+```
+
+测试代码：
+
+```java
+package com.moicen.resteasy.test;
+
+import com.moicen.resteasy.data.ddl.Migration;
+import com.moicen.resteasy.data.ddl.MigrationFactory;
+import org.junit.Test;
+
+public class MigrationTest {
+    @Test
+    public void testCreate() {
+        Migration.create(MigrationFactory.getMetaData("test"));
+    }
+
+    @Test
+    public void testUpdate() {
+        Migration.update(MigrationFactory.getMetaData("test"));
+    }
+
+}
+
+```
+
+这里需要注意的是，hibernate只会正确识别到`main`目录下的`persistence.xml`，如果是写在`test`目录下，hibernate可以读取到，测试可以通过，但是无法输出SQL语句。
+
 
 跑一把测试看生成的SQL语句，首先是`create`生成现有的完整SQL：
 
