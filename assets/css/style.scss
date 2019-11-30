@@ -3,14 +3,23 @@
 
 @import "{{ site.theme }}";
 
+.wrapper{
+    min-width: 640px;
+    width: 50%;
+}
 
 section {
-    > ul li {
-        a strong {
-            color: #069;
-        }
-        em {
-            margin-left: 10px;
+    > ul {
+        list-style: simp-chinese-formal;
+        padding-inline-start: 64px;
+        color: #069;
+        li {
+            em {
+                color: #555;
+            }
+            p {
+                color: #555;
+            }
         }
     }
 }
