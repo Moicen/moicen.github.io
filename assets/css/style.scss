@@ -4,17 +4,13 @@
 @import "{{ site.theme }}";
 
 
-header {
-    > ul {
-        top: 30px;
-        height: 28px;
-
-        > li {
-            height: 28px;
-
-            > a {
-                height: 38px;
-            }
+section {
+    > ul li {
+        a strong {
+            color: #069;
+        }
+        em {
+            margin-left: 10px;
         }
     }
 }
