@@ -8,6 +8,11 @@
     width: 50%;
 }
 
+header ul a {
+    line-height: 40px;
+    padding-top: 0;
+}
+
 section {
     > ul {
         list-style: simp-chinese-formal;
