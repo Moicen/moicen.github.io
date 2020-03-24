@@ -22,8 +22,13 @@ tags: [tech, linux, ssh, security, login]
 # 设置无密码使用sudo权限
 [root ~] echo 'moicen ALL=(ALL) NOPASSWD: ALL'  >> /etc/sudoers
 [root ~] mkdir /home/moicen/.ssh
-[root ~] vi /home/admin/.ssh/authorized_keys
+# 新创建的目录，默认的权限是`drwxrwxr-x`，需修改为700，否则ssh会认为不安全而拒绝
+[root ~] ls -al
+drwxrwxr-x  2 moicen moicen 4096 May 12 14:39 .ssh
+[root ~] chmod 700 ./home/moicen/.ssh
 # 将本机的~/.ssh/id_rsa.pub文件内容复制到这个authorized_keys文件中
+[root ~] vi /home/moicen/.ssh/authorized_keys
+[root ~] chmod og-rw /home/moicen/.ssh/authorized_keys
 ```
 
 这里，如果是使用有sudo权限的非root用户登录，可以添加用户，设置密码，但是无法设置sudo权限：
