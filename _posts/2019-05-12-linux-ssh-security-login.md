@@ -26,6 +26,15 @@ tags: [tech, linux, ssh, security, login]
 # 将本机的~/.ssh/id_rsa.pub文件内容复制到这个authorized_keys文件中
 ```
 
+这里，如果是使用有sudo权限的非root用户登录，可以添加用户，设置密码，但是无法设置sudo权限：
+
+![set sudo without root](/assets/images/2019-05-12-set-sudo-without-root.jpg)
+
+需要切换到root账号操作：
+
+![su root](/assets/images/2019-05-12-su-root.jpg)
+
+
 ### 2. 将root用户的ssh登录禁用，修改`/etc/ssh/sshd_config`文件，设置`PermitRootLogin`为`yes`并取消注释，
 
 ```bash
